@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: 'sample-job'
+spec:
+  completions: 3
+  parallelism: 3
+  completionMode: Indexed
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - command:
+        - 'bash'
+        - '-c'
+        - 'echo "My partition: ${JOB_COMPLETION_INDEX}"'
+        image: 'docker.io/library/bash'
+        name: 'sample-load'
